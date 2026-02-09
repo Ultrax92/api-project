@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('author', 100);
-            $table->text('summary');
+            $table->string('summary', 500);
             $table->string('isbn', 13)->unique();
             $table->timestamps();
         });

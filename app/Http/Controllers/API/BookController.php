@@ -27,7 +27,7 @@ class BookController extends Controller
 
         $book = Book::create($validated);
 
-        return response()->json(new BookResource($book), 201);
+        return new BookResource($book);
     }
 
     // 3. Afficher un livre (GET)
@@ -55,6 +55,6 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-        return response()->json(null, 204);
+        return response()->noContent();
     }
 }
