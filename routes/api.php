@@ -19,6 +19,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Gestion des livres (Création, Modif, Suppression)
     Route::post('/books', [BookController::class, 'store']);
-    Route::put('/books/{book}', [BookController::class, 'update']);
+    Route::match(['put', 'patch'], '/books/{book}', [BookController::class, 'update']);
     Route::delete('/books/{book}', [BookController::class, 'destroy']);
 });
