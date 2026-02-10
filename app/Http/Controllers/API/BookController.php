@@ -6,16 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Http\Resources\BookResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class BookController extends Controller
 {
-    // 1. Lister les livres (GET)
     public function index()
     {
-        return BookResource::collection(Book::all());
+        return BookResource::collection(Book::paginate(2));
     }
 
-    // 2. Créer un livre (POST)
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -30,13 +29,15 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
-    // 3. Afficher un livre (GET)
-    public function show(Book $book)
+    public function show($id)
     {
+        $book = Cache::remember('book_' . $id, 3600, function () use ($id) {
+            return Book::findOrFail($id);
+        });
+
         return new BookResource($book);
     }
 
-    // 4. Modifier un livre (PUT/PATCH)
     public function update(Request $request, Book $book)
     {
         $validated = $request->validate([
@@ -51,7 +52,6 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
-    // 5. Supprimer un livre (DELETE)
     public function destroy(Book $book)
     {
         $book->delete();
