@@ -14,15 +14,15 @@ class UserTest extends TestCase
     {
         $user = new User();
 
-        $user->email = 'john@entreprise.com';
-        $this->assertTrue($user->usesProfessionalEmail(), "L'email entreprise.com devrait être PRO");
+        $user->email = 'john@tesla.com';
+        $this->assertTrue($user->usesProfessionalEmail(), "L'email tesla.com devrait être PRO");
 
         $user->email = 'etudiant@univ-lyon.fr';
         $this->assertTrue($user->usesProfessionalEmail(), "L'email universitaire devrait être PRO");
     }
 
     /**
-     * Teste que usesProfessionalEmail renvoie FALSE pour les domaines publics.
+     * Teste que usesProfessionalEmail renvoie FALSE pour les domaines de la prof.
      */
     public function test_uses_professional_email_returns_false_with_public_domains(): void
     {
@@ -32,12 +32,8 @@ class UserTest extends TestCase
             'john@gmail.com',
             'paul@yahoo.fr',
             'jacques@hotmail.com',
-            'marie@orange.fr',
-            'lucie@sfr.fr',
-            'pierre@free.fr',
-            'mamie@wanadoo.fr',
-            'papy@laposte.net',
-            'adrien@outlook.com'
+            'adrien@outlook.com',
+            'sarah@live.fr'
         ];
 
         foreach ($badEmails as $email) {
