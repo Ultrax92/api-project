@@ -48,6 +48,44 @@ class User extends Authenticatable
 
     public function usesProfessionalEmail(): bool
     {
-        return !preg_match('/@(gmail|yahoo|hotmail|live|outlook)\./', $this->email);
+        $publicDomains = [
+            'gmail',
+            'googlemail',
+            'yahoo',
+            'ymail',
+            'rocketmail',
+            'hotmail',
+            'live',
+            'outlook',
+            'msn',
+            'windowslive',
+            'sfr',
+            'neuf',
+            'club-internet',
+            'cegetel',
+            'free',
+            'aliceadsl',
+            'orange',
+            'wanadoo',
+            'voila',
+            'laposte',
+            'bbox',
+            'numericable',
+            'noos',
+            'aol',
+            'aim',
+            'icloud',
+            'me',
+            'mac',
+            'protonmail',
+            'proton',
+            'gmx',
+            'yandex',
+            'mail',
+            'zoho'
+        ];
+
+        $pattern = '/@(' . implode('|', $publicDomains) . ')\./i';
+        return !preg_match($pattern, $this->email);
     }
 }
